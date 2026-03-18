@@ -5,17 +5,6 @@ const bcrypt = require('bcrypt');
 module.exports = (sequelize, DataTypes) => {
   class Users extends Model {
     static associate(models) {
-      // Um usuário pode ter muitos imóveis
-      Users.hasMany(models.Imovel, {
-        foreignKey: 'usuario_id',
-        as: 'imoveis'
-      });
-
-      // Um usuário pode ter muitas locações (como locatário)
-      Users.hasMany(models.Locacao, {
-        foreignKey: 'usuario_id',
-        as: 'locacoes'
-      });
     }
 
     async validarSenha(senhaDigitada) {
@@ -61,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
       }
     },
     tipo_usuario: {
-      type: DataTypes.ENUM('locador', 'locatario'),
+      type: DataTypes.ENUM('admin', 'user', 'dev'),
       allowNull: false
     }
   }, {
