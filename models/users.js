@@ -51,7 +51,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     tipo_usuario: {
       type: DataTypes.ENUM('admin', 'user', 'dev'),
-      allowNull: false
+      allowNull: false,
+      validate: { notEmpty: true }
     }
   }, {
     sequelize,
