@@ -7,7 +7,7 @@ module.exports = {
     async createUser (req, res){
         try{
             const {nome, cpf, email, senha, tipo_usuario } = req.body;
-            if (!['admin', 'user', 'dev'].includes(tipo_usuario)){
+            if (tipo_usuario && !['admin', 'user', 'dev'].includes(tipo_usuario)){
                 return res.status(400).json ({
                 message: 'Tipo de usuario inválido.'})
             }
@@ -59,4 +59,53 @@ module.exports = {
             })
         }
     },
+    //UPDATE - Atualizar usuário
+    async updateUser(req, res){
+        try {
+            //'/user/:id'
+            const { id } = req.params;
+            const { nome, cpf, email, senha, tipo_usuario } = req.body
+
+            if (tipo_usuario && !['admin', 'user', 'dev'].includes(tipo_usuario)){
+                return res.status(400).json({
+                    message: 'Tipo de usuário inválido'
+                });
+            }
+            const user = await Users.findByPk(id);
+            if (!user){
+                return res.status(400).json({
+                    message: 'Usuário não encontrado'
+                });
+            }
+            await user.update({nome, cpf, email, senha, tipo_usuario});
+
+            return res.status(201).send();
+
+        } catch (error) {
+            return res.status(500).json ({
+                message: 'Erro ao atualizar usuario',
+                error: error.message
+            })   
+        }
+    },
+    //DELETE - Remover Usuário
+    async deleteUser (req, res){
+        try {
+            const { id } = req.params;
+            //const id = req.params.id;
+            const user = await Users.findByPk(id);
+            if (!user){
+                return res.status(400).json({
+                    message: 'Usuário não encontrado'
+                });
+            }
+            await user.destroy();
+            return res.status(204).send();
+        } catch (error) {
+            return res.status(500).json ({
+                message: 'Erro ao excluir usuario',
+                error: error.message
+            })              
+        }
+    }
 }
