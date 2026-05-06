@@ -1,10 +1,12 @@
 require('dotenv').config();
 const express = require ('express');
 const general = require('./routes/general.routes');
+const usersRoutes = require('./routes/users.routes');
 const app = express();
 //const PORT = 3000;
 
-app.use ('/general', general);
+app.use ('/general',general);
+app.use ('/users',usersRoutes);
 
 // são os ultimos !!!!!
 app.use((req, res, next) => {
