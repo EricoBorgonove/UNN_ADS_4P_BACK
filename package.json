@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon index.js"
@@ -16,6 +16,7 @@
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "express-static": "^1.2.6",
+    "mysql2": "^3.22.3",
     "path": "^0.12.7",
     "sequelize": "^6.37.7",
     "sequelize-cli": "^6.6.5"

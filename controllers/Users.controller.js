@@ -6,7 +6,9 @@ module.exports = {
 
     async createUser (req, res){
         try{
-            const {nome, cpf, email, senha, tipo_usuario } = req.body;
+            console.log (req.body)
+            const { nome, cpf, email, senha, tipo_usuario } = req.body;
+            
             if (tipo_usuario && !['admin', 'user', 'dev'].includes(tipo_usuario)){
                 return res.status(400).json ({
                 message: 'Tipo de usuario inválido.'})
@@ -17,7 +19,9 @@ module.exports = {
                 message: 'Email já cadastrado.'})
             }
             await Users.create ({nome, cpf, email, senha, tipo_usuario });
-            return res.status(201);            
+            return res.status(201).json({
+                message: 'Usuário criado com sucesso'
+            });           
         }catch(error){
             return res.status(500).json ({
                 message: 'Erro ao criar usuario',
